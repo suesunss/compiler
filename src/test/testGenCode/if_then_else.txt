@@ -1,0 +1,140 @@
+JUMP init
+
+addint: NOP
+PUSHL -2
+PUSHL -1
+ADD
+STOREL -3
+RETURN
+
+subint: NOP
+PUSHL -2
+PUSHL -1
+SUB
+STOREL -3
+RETURN
+
+mulint: NOP
+PUSHL -2
+PUSHL -1
+MUL
+STOREL -3
+RETURN
+
+divint: NOP
+PUSHL -2
+PUSHL -1
+DIV
+STOREL -3
+RETURN
+
+concat: NOP
+PUSHL -2
+PUSHL -1
+CONCAT
+STOREL -3
+RETURN
+
+Integer_printInt: NOP
+PUSHS "Int:"
+WRITES
+LOAD 0
+WRITEI
+PUSHS "\n"
+WRITES
+RETURN
+
+String_println: NOP
+LOAD 0
+WRITES
+PUSHS "\n"
+WRITES
+RETURN
+
+String_print: NOP
+LOAD 0
+WRITES
+RETURN
+
+init: NOP
+--------Integer
+ALLOC 1
+DUPN 1
+PUSHA Integer_printInt
+STORE 0
+
+--------String
+ALLOC 2
+DUPN 1
+PUSHA String_println
+STORE 0
+DUPN 1
+PUSHA String_print
+STORE 1
+
+--------Void
+ALLOC 0
+
+--------A
+ALLOC 0
+
+
+JUMP main
+
+main: START
+ALLOC 2 ------int1
+DUPN 1
+ALLOC 2 --int
+DUPN 1
+PUSHI 0
+STORE 0
+DUPN 1
+PUSHA Integer_printInt
+STORE 1
+STORE 0
+DUPN 1
+PUSHA Integer_printInt
+STORE 1
+
+PUSHG 4
+PUSHI 1
+STORE 0
+
+ALLOC 2 ------int2
+DUPN 1
+ALLOC 2 --int
+DUPN 1
+PUSHI 0
+STORE 0
+DUPN 1
+PUSHA Integer_printInt
+STORE 1
+STORE 0
+DUPN 1
+PUSHA Integer_printInt
+STORE 1
+
+PUSHG 5
+PUSHI 2
+STORE 0
+
+PUSHG 4
+LOAD 0
+
+PUSHG 5
+LOAD 0
+
+SUP
+JZ else_0
+PUSHG 4
+LOAD 1
+CALL
+JUMP end_ITE_0
+else_0:NOP
+PUSHG 5
+LOAD 1
+CALL
+end_ITE_0:NOP
+--this is crops
+POPN 2
+STOP

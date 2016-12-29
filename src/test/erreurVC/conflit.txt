@@ -1,0 +1,15 @@
+class C() is {
+         var v : Integer := 2;
+         var v : Integer := 3; /* erreur contextuelle */
+}
+
+class C2() extends C() is {
+   var vs2 : String := "hello world";
+   var v : String := "an error";
+
+}
+
+class C3() extends C2() is {
+   var void: String := "void";  /* erreur contextuelle ou syntaxique */
+}
+{ /* empty */ }

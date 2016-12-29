@@ -1,0 +1,8 @@
+/*ici, label a de la methode g() n'est pas visible dans la methode f() : OK*/
+/*mais, dans l'expression yield a:c+3, id c n'est pas defini*/
+class A() is {
+	def g() returns Integer { a: Integer | { b : Integer | 3 } }
+	def f() returns Integer { a:Integer | yield a: c+3 }
+}
+{
+}

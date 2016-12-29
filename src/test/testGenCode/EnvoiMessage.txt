@@ -1,0 +1,9 @@
+class A() is {
+  var v1 : Integer;
+  var v2 : Integer;
+}
+
+{
+	var int : Integer := 5;
+	int.printInt();
+}

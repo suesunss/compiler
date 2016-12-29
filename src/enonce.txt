@@ -1,0 +1,249 @@
+/* Exemple de programme dans le langage source.
+ * Attention: pour l'instant seuls les aspects lexicaux et
+ * syntaxiques ont ete verifies automatiquement.
+ */
+class Point(xc: Integer, yc: Integer) is 
+{
+  var static cpt : Integer := 1; /* initialisee au lancement du programme */
+  var x: Integer;
+  var y: Integer;
+  var name: String := "x" & cpt.toString();
+
+  def static getCpt() returns Integer { cpt }
+
+  def final setName(s: String) returns Void { name := s }
+
+  def move(dx: Integer, dy: Integer) returns Point {
+      x := x + dx; y := y + dy;
+      this /* pour retourner une valmeur de type Point */
+  }
+
+  def gety() returns Integer { this.y }  /* avec this explicite */ 
+
+  def getx() returns Integer { x }       /* avec this implicite */  
+
+  def getxBis() returns Integer { yield x }  /* autre forme */  
+
+  /* forme avec sortie explicite d'un bloc donne. N'a vraiment d'interet
+   * que si on veut sortir directement d'un bloc emboite
+   */
+  def getxTer() returns Integer { main: Integer | yield main : x } 
+
+  def bizarre (i : Integer) returns Integer 
+      { main: Integer | 
+        if i <> 0 then { yield main : 3 }
+        else { yield 12 ; /* empeche la division par 0 d'etre executee */
+               1 / 0 };
+        42 /* le "yield 12" ne sort que du bloc englobant, donc on renvoie 42 */
+      } 
+
+  def nothing() returns Void { }
+
+  def nothingBis() returns Void { yield void } /* equivalent */
+
+  def print() returns Void {
+      /* Exemples avec l'operateur & de concatenation de chaines */
+      ( "[" & name & "]" ).print();
+      ( "= (" & x.toString() & ", " & y.toString() & ")" ).println()
+  }
+
+      /* le this est obligatoire dans les appels de methode */
+  def verboseMove (dx: Integer, dy: Integer) returns Void {
+      this.move(dx, dy); 
+      this.print();
+  }
+
+  def clone() returns Point {
+      var res : Point := new Point(x, y);
+      res.setName(this.name & "-bis");
+      res
+  }
+
+  def egal(p: Point) returns Integer { 
+       var b1 : Integer := p.x - x;
+       var b2 : Integer := p.y - y;
+       if b1 then yield 0;
+       yield b2 = 0
+  }
+
+  def egal2(p: Point) returns Integer {
+       var b1 : Integer := p.x - x;
+       var b2: Integer := 5;
+       var result : Integer := 
+           if b1 then 0
+           else {
+               var b2: Integer := p.y - y; /* masquage du b2 externe ! */
+                yield b2 = 0
+           };
+       result
+  }
+
+  def static final zero() returns Point {
+      var res : Point := new Point(0, 0);
+      res.x := res.y := 0;
+      res
+  }  
+
+  /* Corps du constructeur. Un constructeur est forcement de type Void */
+  { x := xc; y := yc; cpt := cpt+1; }
+}
+
+class Couleur(cinit: Integer) is {
+  var coul: Integer; 	/* initialise dans le constructeur */
+
+  def static blanc() returns Couleur { new Couleur(0) }
+
+  def static noir() returns Couleur { new Couleur(1) }
+
+  def static gris() returns Couleur { new Couleur(2) }
+
+  def name() returns String { globalBlock: String |
+      if coul = 0 then yield "Blanc" /* etiquette de bloc optionnelle */
+      else { 
+             var dummy : String :=
+                 if coul = 1 then "Noir" else "Gris";
+	     yield globalBlock: dummy
+           };
+      "unreachable"
+  }
+
+  def stringOfCouleur(i: Integer) returns String 
+    { global: String |
+      var aux : Couleur :=
+             { local: Couleur |
+                 if i < 0 then yield global: ""      /* sort du bloc externe */
+		 else if i > 2 then yield global: ""
+                        /* l'etiquette 'local' est ici inutile puisqu'on veut
+                         * juste sortir du bloc courant 
+                         */
+                       else yield local: new Couleur(i)
+             };
+      aux.name()
+   }
+
+  /* Pas de Booleen, on utilise Integer */
+  def estGris() returns Integer { coul = 2 }
+
+   /* 3 couleurs : couleur = 0, noir = 1, gris (ou autre chose !) = 2.
+    * Inutilement complique : sert juste a rappeler que le if renvoie une valeur
+    */
+  { coul := if cinit = 0 then 0
+            else (if cinit = 0 then  0 else 1) + 1
+  }
+}
+
+class PointColore(xc: Integer, yc:Integer, c: Couleur)
+      extends Point(xc, yc) is
+{  
+  var coul: Couleur;
+
+  def couleur() returns Couleur { coul }
+
+  def colore() returns Integer { coul.estGris() <> 0 }
+
+/* ';' final obligatoire pour ne pas avoir d'erreur de typage puisque
+ * l'affectation retournerait Couleur ici
+*/
+  def setCouleur(c: Couleur) returns Void { coul := c; }
+
+  /* returns Point, pas PointColore ! Pas de covariance du resultat */ 
+  def override clone() returns Point { new PointColore(x, y, coul) }
+
+  def estGris() returns Integer {
+      /* une trace pour verifier qu'on appelle bien la bonne */
+      "Inside PointColore::estGris".println();
+      coul.estGris()
+  }
+
+   def override print() returns Void {
+      "Inside PointColore::print".println();
+      super.print();
+      this.couleur().name().println();
+  }
+
+  { coul := c }
+}
+
+class PointNoir(xc: Integer, yc:Integer)
+      extends PointColore(xc, yc, Couleur.noir()) is {
+  def override estGris() returns Integer { 0 /* false, donc */ }
+  def override couleur() returns Couleur {
+      "Inside PointNoir:couleur".println();
+      yield super.couleur()
+  }
+  /* pas de corps de constructeur pour cette classe, mais appel
+   * au constructeur de la super classe.
+   */
+}
+
+final class DefaultPoint() /* Parentheses obligatoires */
+      extends PointColore(0, 0, Couleur.blanc())
+is {
+   def override estGris() returns Integer { 0 }
+   def override couleur() returns Couleur {
+      "Inside DefaultPoint::couleur".println();
+      super.couleur()
+  }
+}
+
+final class Test() is {
+ def static test(p: Point, p2: PointColore, p3: PointNoir) returns Void {
+      var c: String;
+      var c2: String;
+      var c3: String;
+      if p2.colore() <> 0 then c := "colore"  else c := "blanc";
+      "Appel 2: ".println();
+      if p3.colore() <> 0 then c2 := "colore" else c2 := "blanc";
+      "Appel 3: ".println();
+      if p3.colore() <> 0 then c3 := "colore" else c3 := "blanc";
+      "Resultats de test: ".println();
+      c.print(); " ".print();
+      c2.print(); " ".print();
+      c3.print();
+      "Test::test termine.".println()
+  }
+
+  def static test2(p: PointColore) returns Void { 
+     "Test::test2 debut.".println();
+       p.couleur().name().print(); 
+      /* ';' facultatif: le type de retour de println est Void' */
+      "Test::test2 termine.".println();
+  }
+}
+
+{ 
+ /* Bloc qui correspond au programme principal */ 
+  var p1: Point := new Point(1, 5);
+  var p2: Point := new Point(2, 3);
+  var o : PointColore := new PointColore(0, 0, new Couleur(0));
+  var pn : PointNoir := new PointNoir(+1, -1);
+  var dp : DefaultPoint := new DefaultPoint();
+  p2.move(p1.getx(), p1.gety());
+  o.setName("origine");
+  p2.move(p1.getx()-2*5-3, p1.gety());
+  o.print();
+  p2.print();
+  o.clone().print();
+  o.clone().move(54, 36).print();
+  /* Ne compilerait pas car clone() renvoie statiquement un Point */
+  /* o := o.clone(); */
+  p1 := p1.clone().move(+2, -3); 
+  p1.print();
+  o.clone().print();
+
+  "\nOn appelle test(Point, PointColore, PointNoir)".println();
+  Test.test(p1, o, pn);
+  "\nOn appelle test(PointNoir, PointNoir, PointNoir)".println();
+  Test.test(pn, pn, pn);
+  p1 := pn;
+  Test.test2(o);
+  Test.test2(pn);
+  o := pn;
+
+  "\nOn appelle a nouveau test(PointNoir, PointNoir, PointNoir)".println();
+  Test.test(p1, o, pn);
+  Test.test2(o);
+  Test.test2(pn);
+
+ "\nDone !".println()
+}

@@ -1,0 +1,7 @@
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:String;
+	def doSomething(s: String) returns Void { s:= 33}
+	/*s est de type String, KO car 33(Cste)-->s*/
+}
+{}

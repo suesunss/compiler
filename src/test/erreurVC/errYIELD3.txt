@@ -1,0 +1,7 @@
+/* Incorrect : le 'a' du yield ne fait pas reference a un bloc externe */
+class A() is {
+	def g() returns Integer { a: Integer | { b : Integer | 3 } }
+	def f() returns Integer { yield a: c+3 }
+}
+{
+}

@@ -1,0 +1,6 @@
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:String;
+	def doSomething(s: String) returns Void { s:= 33}
+}
+{}

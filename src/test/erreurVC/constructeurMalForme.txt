@@ -1,0 +1,19 @@
+/*ici, classe B herite de la classe A, mais dans la classe B, il y qu'un parametre(xa) qui peut etre*/
+/*passe dans le contructeur de classe mere(A)*/
+
+class A(xa: Integer, ya: String) is{
+ 	var x: Integer;
+ 	var y: String;
+	{
+		x:=xa;
+		y:=ya;	
+	}
+}
+
+class B(xa:Integer, zb: String) extends A(xa,ya) is{
+	var z: String;
+	{
+		z:=zb;	
+	}
+}
+{}

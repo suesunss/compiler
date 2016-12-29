@@ -1,0 +1,9 @@
+/*identificateur w n'est pas defini*/
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:Integer;
+	def doSomething(s: Integer) returns Void {
+	   a:= w+3;
+	}
+}
+{}

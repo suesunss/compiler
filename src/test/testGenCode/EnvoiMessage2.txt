@@ -1,0 +1,8 @@
+class A() is {
+  var v1 : Integer;
+  var v2 : Integer;
+}
+
+{
+	"Hello World".println();
+}

@@ -1,0 +1,7 @@
+/*Deux blocs de la methode g() ne peuvent pas avoir le meme label: a*/
+class A() is {
+	def g() returns Integer { a: Integer | { a : Integer | 3 } }
+
+}
+{
+}

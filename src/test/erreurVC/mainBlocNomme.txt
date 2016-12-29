@@ -1,0 +1,9 @@
+class A() is{
+	var x:Integer;
+	def f() returns Void {
+		x.printInt();
+	}
+}
+{
+
+}

@@ -1,0 +1,8 @@
+class A() is {
+  def f() returns Integer { 0 }
+}
+class A1() extends A() is {
+}
+{
+
+}

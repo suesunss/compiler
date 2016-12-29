@@ -1,0 +1,11 @@
+/*id v est defini deux fois*/
+class A() is {
+  var v : Integer := 1;
+  var v : Integer := 2;
+  def f() returns Void { "A::f()\n".println(); v := 2; }
+  def g() returns Void { "A::g()\n".println(); v := 5; }
+  def toString() returns String { v.toString() }
+}
+
+{ 
+}

@@ -1,0 +1,12 @@
+/*ici, une expression IF-THEN-ELSE dans la methode doSomething()*/
+/*KO: car b est un attribut de la classe A, de type Integer, on essaie de l'instancier par un String*/
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:Integer;
+	def doSomething(s: Integer) returns Void {
+	   if s>5
+		then b:= "hello"
+		else b:= "world";	
+	}
+}
+{}

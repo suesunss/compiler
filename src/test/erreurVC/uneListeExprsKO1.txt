@@ -1,0 +1,13 @@
+/*ici, id u n'est pas defini avant, une erreur VC*/
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:String;
+	def doSomething(s: String) returns Void {
+	 	s:= "hello world";
+		var w:String := "France";
+		var q:String := "China";
+		w := "Espanole";
+		u := 14;
+	}
+}
+{}

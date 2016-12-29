@@ -1,0 +1,9 @@
+/*ici, v est de type Integer, dans f(), on veut l'affecter un String KO!*/
+class A() is {
+  var v : Integer;
+  /*var v : Integer := new String();*/
+  def f() returns Void { "A::f()\n".println(); v := "hello world"; }
+  def g() returns Void { "A::g()\n".println(); v := 5; }
+  def toString() returns String { v.printInt(); }
+}
+{}

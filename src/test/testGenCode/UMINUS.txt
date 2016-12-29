@@ -1,0 +1,24 @@
+class A() is {
+  var v : Integer := 1;
+  def f() returns Void { "A::f()\n".println(); v := 2; }
+  def g() returns Void { "A::g()\n".println(); v := 5; }
+  def toString() returns String { v.toString() }
+}
+
+
+class A2() extends A() is {
+  var v : String := "hello"; 	/* masque le champ v de la classe A */
+  def override f() returns Void { 
+      "A2::f()\n".println();
+      super.f();
+      v := "Hello";
+   }
+  def override toString() returns String { super.toString() & v }
+}
+
+{
+
+	var int1 : Integer := 1;
+	var int2 : Integer := 2;
+	-int2;
+}

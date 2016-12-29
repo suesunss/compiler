@@ -1,0 +1,7 @@
+/*s:String est un parametre de la methode doSomething(), ne peut pas definir un autre dans son corps*/
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:String;
+	def doSomething(s: String) returns Void { var s:Integer;}
+}
+{}

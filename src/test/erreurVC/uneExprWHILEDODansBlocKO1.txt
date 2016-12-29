@@ -1,0 +1,11 @@
+/*ici, une expression WHILE-DO dans la methode doSomething()*/
+/*KO: Probleme dans la condition, s est de type String, l'operateur de comparaison ne sert qu'a Integer!*/
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:Integer;
+	def doSomething(s: String) returns Void {
+	   while s > 5
+	   do s:= s-1;	
+	}
+}
+{}

@@ -1,0 +1,32 @@
+/*appel new Point(), manque d'arguments*/
+class Point(xc: Integer, yc: Integer, yz : String, yw: Integer, yq: String) is {
+
+  var x: Integer := 5;
+  var name: String := "?";
+
+  def id() returns Point { new Point()}
+
+  def setName(s: String) returns Void {
+      this.name := s;
+  }
+
+  def print() returns Void { name.println(); }
+}
+
+class ColorPoint(couleur: Integer) is{
+	var static defaut : Integer := 255; 
+}
+
+class Else(a:String, b : Integer) is{
+	var y : String;
+	var z : Integer;
+	var w : Integer;
+}
+{ 
+  var p1: Point := new Point(1, 5);
+  var p2: Point := new Point(2, 3);
+  p2.setName("glop");
+  p1.print();
+  p2.print();
+  "Done".println();
+}

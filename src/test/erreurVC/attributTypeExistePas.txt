@@ -1,0 +1,6 @@
+/*ici, classe B n'existe pas, donc c'est un type indefini*/
+class A() is{
+	var x : B := 1;
+}
+{
+}

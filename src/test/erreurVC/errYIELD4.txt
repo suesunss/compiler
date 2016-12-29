@@ -1,0 +1,8 @@
+/* interdit car les noms de bloc ont une portee sur toute la fonction */
+class A() is {
+	def h() returns Integer {
+      if 1 = 2 then { a: Integer | 1 } else { a: Integer | 2 }
+	}
+}
+{
+}

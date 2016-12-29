@@ -1,0 +1,11 @@
+/*ici, dans le bloc main, l'envoi de message monA.g() n'est pas correct car il n'y pas cette methode*/
+class A() is{
+	var x:Integer;
+	def f() returns Void {
+		x.printInt();
+	}
+}
+{
+	var monA : A := new A();
+	monA.g();
+}

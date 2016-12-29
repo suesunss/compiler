@@ -1,0 +1,9 @@
+/*mauvaises arguments dans l'initialisation de champs*/
+class A() is {
+  var v : String := new String("hello","world");
+  def f() returns Void { "A::f()\n".println();}
+  def g() returns Void { "A::g()\n".println();}
+  def toString() returns String { v.toString() }
+}
+{ 
+}

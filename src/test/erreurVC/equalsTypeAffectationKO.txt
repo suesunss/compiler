@@ -1,0 +1,26 @@
+/*ici, on initialise une reference de B par une instance de A, KO car A n'est pas une sous-classe de B*/
+/*dans la fonction equalsType() de tp.c, on verifie la condition isHeritage()*/
+class A() is {
+}
+
+class B() extends A() is {
+}
+
+class B2() extends B() is {
+}
+
+class C() extends A() is {
+	var x : B := new A();
+}
+
+class C2() extends C() is {
+}
+
+class E() extends Integer() is{
+}
+class Test() is {
+   def static f() returns A { if 0 then yield new B2(); new C2() }
+}
+{
+  /* var a : A := if 1 then new C2() else new B2(); */
+}

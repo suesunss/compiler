@@ -1,0 +1,13 @@
+/*deux fonctions, identificateur x qui est defini dans la methode doSomething() n'est pas visible dans*/
+/*la methode doSomethingEles()*/
+class A(xa: Integer, xb: String) is{
+	var a:Integer;
+	var b:Integer;
+	def doSomething(s: Integer) returns Void {
+	   var x:Integer := 5;
+	}
+	def doSomethingElse(z:Integer) returns Void{
+	   b:= z;	
+	}
+}
+{}

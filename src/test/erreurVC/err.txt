@@ -1,0 +1,20 @@
+/* les erreurs dans cette classe sont de nature contextuelle */
+class A() is {
+
+  def g() returns Integer { a: Integer | { a : Integer | 3 } }
+  def f() returns Integer { yield b: 0 }
+  def k() returns Integer {
+      if 1 = 2 then { a: Integer | 1 } else { yield a:1 }
+  }
+  def h() returns Integer {
+/* interdit car les noms de bloc ont une portee sur toute la fonction */
+      if 1 = 2 then { a: Integer | 1 } else { a: Integer | 2 }
+  }
+
+def z() returns Integer {
+ /* Incorrect : le 'a' du yield ne fait pas reference a un bloc externe */
+     yield a: { a: Integer | 2 }
+  }
+}
+{
+}

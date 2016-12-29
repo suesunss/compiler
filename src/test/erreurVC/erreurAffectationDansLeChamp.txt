@@ -1,0 +1,10 @@
+/*erreur d'affectation, "hello world" --> v:Integer*/
+class A() is {
+  var v : Integer := "hello world";
+  /*var v : Integer := new String();*/
+  def f() returns Void { "A::f()\n".println(); v := 3; }
+  def g() returns Void { "A::g()\n".println(); v := 5; }
+  def toString() returns String { v.toString() }
+}
+{ 
+}

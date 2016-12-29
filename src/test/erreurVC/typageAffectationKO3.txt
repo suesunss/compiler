@@ -1,0 +1,26 @@
+/*ici, on cree une variable x d'abord, et faire une affectation y := x*/
+class A() is {
+	var x:String := "hello world";
+	var y:Integer := x;
+}
+
+class B() extends A() is {
+}
+
+class B2() extends B() is {
+}
+
+class C() extends A() is {
+}
+
+class C2() extends C() is {
+}
+
+class E() extends Integer() is{
+}
+class Test() is {
+   def static f() returns A { if 0 then yield new B2(); new C2() }
+}
+{
+  /* var a : A := if 1 then new C2() else new B2(); */
+}

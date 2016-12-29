@@ -1,0 +1,26 @@
+/*ici, dans la classe B, on instancie le champ statique de la classe B avec l'appel de A.nombreA*/
+class A() is {
+	var static nombreA : Integer := 0;
+}
+
+class B() extends A() is {
+    var static nombreA : Integer := A.nombreA;
+}
+
+class B2() extends B() is {
+}
+
+class C() extends A() is {
+}
+
+class C2() extends C() is {
+}
+
+class E() extends Integer() is{
+}
+class Test() is {
+   def static f() returns A { if 0 then yield new B2(); new C2() }
+}
+{
+  /* var a : A := if 1 then new C2() else new B2(); */
+}
